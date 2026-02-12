@@ -6,7 +6,10 @@
 # serves each request in a thread from an internal thread pool.
 #
 # You can control the number of workers using ENV["WEB_CONCURRENCY"]. You
-# should only set this value when you want to run 2 or more workers. The
+# should only set this value when you want to run 2 or more workers.
+
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+
 # default is already 1. You can set it to `auto` to automatically start a worker
 # for each available processor.
 #
@@ -31,6 +34,7 @@ threads threads_count, threads_count
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
 
+preload_app!
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
